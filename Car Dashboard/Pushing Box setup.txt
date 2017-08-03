@@ -1,0 +1,24 @@
+GOOGLE METHOD :
+1. Creat a google form with question as variables required
+2. Link the form to a spreadsheet (so that a spreadsheet of same data is created and also can be filled using form)
+3. Use pushingbox website to link the form as
+          - Create a Service -> Custom one -> enter url of RESPONSE page of form
+          - Inspect the answer spaces of the form for each answer and get the entry id (of form entry.123456)
+          - My Scenario -> Add a name -> Add an action (Select the service created) -> In token enter the format as 
+   
+            ?entry.1855699688=$FirstVariable$&entry.69530139=$SecondVariable$&submit=Submit   (Very Very Important)  (Get the DevID generated)
+
+4. Follow the Syntax :
+       - Set TCP connection : AT+CIPSTART="TCP","213.186.33.19",80  (no 4 because CIPMUX=0) //needs testing for CIPMUX=1
+       - Send length of data : AT+CIPSEND="Length Here"
+       - Important Sending Syntax : 
+                      cmd =  "GET /pushingbox?devid=";
+                      cmd += *your id from pusing box here*;
+                      cmd += "&FirstVariable="+String(value1)+"&SecondVariable="+String(value2)+" HTTP/1.1\r\n";  (Use the same name for variables as used in token)
+                      cmd += "Host: api.pushingbox.com\r\n\r\n"; 
+ 
+Points :
+    - Worked for as less as 1 second delay. (Not recommended due to very less time for AT Command execution)
+    - Data already in an excel like format with similar tools                                    //Need to check for dynamic graph insertion
+    - Seems to be the best alternative yet. (Only 1000 API request per day per Account) 
+    
